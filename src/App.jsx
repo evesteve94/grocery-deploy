@@ -1,50 +1,74 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import Header from "./Header";
+import SearchItem from "./SearchItem";
+import AddItem from "./AddItem";
 import Content from "./Content";
 import Footer from "./Footer";
-import AddItem from "./AddItem";
-import SearchItem from "./SearchItem";
 
 function App() {
+  // const [items, setItems] = useState([
+  //   {
+  //     id: 1,
+  //     checked: false,
+  //     item: "Ett kilo äpplen",
+  //   },
+  //   {
+  //     id: 2,
+  //     checked: false,
+  //     item: "kakor",
+  //   },
+  //   {
+  //     id: 3,
+  //     checked: false,
+  //     item: "Kalles Kaviar",
+  //   },
+  // ]);
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist")) || []
   );
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
-  const setAndSaveItems = (newItems) => {
-    setItems(newItems);
-    localStorage.setItem("shoppinglist", JSON.stringify(newItems));
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addItem(newItem);
-    console.log("submitted");
-  };
+  console.log("before useEffect");
+
+  useEffect(() => {
+    localStorage.setItem("shoppinglist", JSON.stringify(items));
+  }, [items]);
+
+  console.log("after useEffect");
 
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
 
   const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id);
-    setAndSaveItems(listItems);
+    setItems(listItems);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newItem) return;
+    console.log(newItem);
+    // addItem senare
+    addItem(newItem);
+
+    setNewItem("");
   };
 
   return (
-    <div className="App">
-      <Header title="Grocery list" />
+    <>
+      <Header title="Grocery List" />
       <AddItem
         newItem={newItem}
         setNewItem={setNewItem}
@@ -59,7 +83,7 @@ function App() {
         handleDelete={handleDelete}
       />
       <Footer length={items.length} />
-    </div>
+    </>
   );
 }
 
