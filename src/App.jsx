@@ -10,7 +10,7 @@ function App() {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist")) || []
   );
-  const [newItem, setNewItem] = useState("");
+
   const [search, setSearch] = useState("");
 
   console.log("before useEffect");
@@ -20,13 +20,6 @@ function App() {
   }, [items]);
 
   console.log("after useEffect");
-
-  const addItem = (item) => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, checked: false, item };
-    const listItems = [...items, myNewItem];
-    setItems(listItems);
-  };
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
@@ -40,25 +33,11 @@ function App() {
     setItems(listItems);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!newItem) return;
-    console.log(newItem);
-    // addItem senare
-    addItem(newItem);
-
-    setNewItem("");
-  };
-
   return (
     <>
       <DataProvider>
         <Header title="Grocery List" />
-        <AddItem
-          newItem={newItem}
-          setNewItem={setNewItem}
-          handleSubmit={handleSubmit}
-        />
+        <AddItem />
         <SearchItem search={search} setSearch={setSearch} />
         <Content
           items={items.filter((item) =>

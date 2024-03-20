@@ -1,5 +1,3 @@
-import React from "react";
-
 const SearchItem = ({ search, setSearch }) => {
   return (
     <form className="searchForm" onSubmit={(e) => preventDefault()}>

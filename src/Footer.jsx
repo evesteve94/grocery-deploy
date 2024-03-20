@@ -1,10 +1,12 @@
-import React from "react";
+import { useContext } from "react";
+import DataContext from "./context/DataContext";
 
-const Footer = ({ length }) => {
+const Footer = () => {
+  const { items } = useContext(DataContext);
   return (
     <footer>
       <p>
-        {length} List {length === 1 ? "Item" : "Items"}
+        {items.length} List {items.length === 1 ? "Item" : "Items"}
       </p>
     </footer>
   );

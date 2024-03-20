@@ -6,8 +6,7 @@ export const DataProvider = ({ children }) => {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist")) || []
   );
-  const [newItem, setNewItem] = useState("");
-  const [search, setSearch] = useState("");
+  // const [newItem, setNewItem] = useState("");
 
   console.log("before useEffect");
 
@@ -17,12 +16,12 @@ export const DataProvider = ({ children }) => {
 
   console.log("after useEffect");
 
-  const addItem = (item) => {
-    const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, checked: false, item };
-    const listItems = [...items, myNewItem];
-    setItems(listItems);
-  };
+  // const addItem = (item) => {
+  //   const id = items.length ? items[items.length - 1].id + 1 : 1;
+  //   const myNewItem = { id, checked: false, item };
+  //   const listItems = [...items, myNewItem];
+  //   setItems(listItems);
+  // };
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
@@ -47,7 +46,14 @@ export const DataProvider = ({ children }) => {
   };
 
   return (
-    <DataContext.Provider value={{ items, handleCheck, handleDelete }}>
+    <DataContext.Provider
+      value={{
+        items,
+        setItems,
+        handleCheck,
+        handleDelete,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
