@@ -1,12 +1,8 @@
-import { useState, useEffect } from "react";
-import Header from "./Header";
-import SearchItem from "./SearchItem";
-import AddItem from "./AddItem";
-import Content from "./Content";
-import Footer from "./Footer";
-import { DataProvider } from "./context/DataContext";
+import { createContext, useEffect, useState } from "react";
 
-function App() {
+const DataContext = createContext({});
+
+export const DataProvider = ({ children }) => {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist")) || []
   );
@@ -51,26 +47,10 @@ function App() {
   };
 
   return (
-    <>
-      <DataProvider>
-        <Header title="Grocery List" />
-        <AddItem
-          newItem={newItem}
-          setNewItem={setNewItem}
-          handleSubmit={handleSubmit}
-        />
-        <SearchItem search={search} setSearch={setSearch} />
-        <Content
-          items={items.filter((item) =>
-            item.item.toLowerCase().includes(search.toLowerCase())
-          )}
-          handleCheck={handleCheck}
-          handleDelete={handleDelete}
-        />
-        <Footer length={items.length} />
-      </DataProvider>
-    </>
+    <DataContext.Provider value={{ items, handleCheck, handleDelete }}>
+      {children}
+    </DataContext.Provider>
   );
-}
+};
 
-export default App;
+export default DataContext;

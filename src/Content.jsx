@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useContext } from "react";
+import DataContext from "./context/DataContext";
 import ItemList from "./ItemList";
 
-const Content = ({ items, handleCheck, handleDelete }) => {
+const Content = () => {
+  const { items } = useContext(DataContext);
   return (
     <main>
       {items.length ? (
-        <ItemList
-          items={items}
-          handleCheck={handleCheck}
-          handleDelete={handleDelete}
-        />
+        <ItemList items={items} />
       ) : (
         <p style={{ marginTop: "2rem", textAlign: "center" }}>
           Your list is empty.
