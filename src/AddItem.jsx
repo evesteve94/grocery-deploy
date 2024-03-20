@@ -22,6 +22,7 @@ const AddItem = () => {
     const listItems = [...items, myNewItem];
     setItems(listItems);
   };
+
   return (
     <form className="addForm" onSubmit={handleSubmit}>
       <label htmlFor="addItem"></label>

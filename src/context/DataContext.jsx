@@ -6,7 +6,6 @@ export const DataProvider = ({ children }) => {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("shoppinglist")) || []
   );
-  // const [newItem, setNewItem] = useState("");
 
   console.log("before useEffect");
 
@@ -15,13 +14,6 @@ export const DataProvider = ({ children }) => {
   }, [items]);
 
   console.log("after useEffect");
-
-  // const addItem = (item) => {
-  //   const id = items.length ? items[items.length - 1].id + 1 : 1;
-  //   const myNewItem = { id, checked: false, item };
-  //   const listItems = [...items, myNewItem];
-  //   setItems(listItems);
-  // };
 
   const handleCheck = (id) => {
     const listItems = items.map((item) =>
@@ -33,16 +25,6 @@ export const DataProvider = ({ children }) => {
   const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id);
     setItems(listItems);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!newItem) return;
-    console.log(newItem);
-    // addItem senare
-    addItem(newItem);
-
-    setNewItem("");
   };
 
   return (
